@@ -27,8 +27,20 @@ class TodoApp extends StatelessWidget {
                         children: [
                             Padding(
                                 padding: const EdgeInsets.only(left:10),
-                                child: Text(tasks[index].taskDetail),
-                                ),
+                                child:Row(
+                                    children:[
+                                        Text(tasks[index].taskDetail),
+                                        Column(
+                                            children:[
+                                                IconButton(icon: Icon(Icons.edit)
+                                                onPressed:(){}),
+                                                IconButton(icon: Icon(Icons.delete)
+                                                onPressed:(){}),
+                                            ],
+                                        ),
+                                    ],
+                                ) ,
+                            ),
                         ],
                     );
                 }
@@ -44,3 +56,5 @@ class Task{
 
     Task(this.title,this.taskDetail);
 }
+
+//Text(tasks[index].taskDetail)

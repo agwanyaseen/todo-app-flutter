@@ -9,12 +9,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
       
     return MaterialApp(
-        initialRoute: '/',
         routes: {
-            '/':(context) => TodoApp(),
             '/AddTask': (context) => AddTask(),
         },
-     home: TodoApp(),
+        home: TodoApp(),
     );
   }
 }
