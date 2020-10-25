@@ -19,7 +19,11 @@ class TodoApp extends StatelessWidget {
                     })
                 ],
             ),
-            body: ListView.builder(
+            body: RefreshIndicator(
+                onRefresh:() async {
+                    Future.delayed(Duration(seconds: 0.5));
+                },
+                child: ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context,index){
                     return ExpansionTile(
@@ -47,6 +51,7 @@ class TodoApp extends StatelessWidget {
                     );
                 }
             ),
+        ),
         );
     }
 }
