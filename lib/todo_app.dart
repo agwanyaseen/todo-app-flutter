@@ -28,13 +28,15 @@ class TodoApp extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.only(left:10),
                                 child:Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children:[
-                                        Text(tasks[index].taskDetail),
+                                        Expanded(child: Text(tasks[index].taskDetail)),
                                         Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
                                             children:[
-                                                IconButton(icon: Icon(Icons.edit)
+                                                IconButton(icon: Icon(Icons.edit),
                                                 onPressed:(){}),
-                                                IconButton(icon: Icon(Icons.delete)
+                                                IconButton(icon: Icon(Icons.delete),
                                                 onPressed:(){}),
                                             ],
                                         ),
