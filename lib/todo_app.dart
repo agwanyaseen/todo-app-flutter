@@ -14,7 +14,9 @@ class TodoApp extends StatelessWidget {
                 title: Text('Manage Your Task'),
                 actions:[
                     IconButton(icon: Icon(Icons.add),
-                    onPressed:(){})
+                    onPressed:(){
+                        Navigator.pushNamed(context, '/AddTask');
+                    })
                 ],
             ),
             body: ListView.builder(
