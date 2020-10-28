@@ -1,4 +1,5 @@
-import 'todo_app.dart'
+import 'todo_app.dart';
+
 class Tasks {
     var _totaltask = <Task>[];
     static Tasks task1;
