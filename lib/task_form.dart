@@ -49,9 +49,9 @@ class AddTask extends StatelessWidget{
                             color: Theme.of(context).primaryColor,
                             child: Text('Add Task'),
                             onPressed:(){
-                                    var tasksObj = new Task(taskTitle.value.toString(),task.value.toString());
-                                    var tasks1 = Tasks();
-                                    tasks1.addTask(tasksObj);
+                                    // var tasksObj = new Task(taskTitle.value.toString(),task.value.toString());
+                                    // var tasks1 = Tasks();
+                                    // tasks1.addTask(tasksObj);
                                     print('Title : ${taskTitle.value}');
                                     print('Task : ${task.value}');
                                     Scaffold.of(context)
