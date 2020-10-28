@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'tasks.dart';
 class AddTask extends StatelessWidget{
     final formKey = GlobalKey<FormState>();
     final taskTitle = TextEditingController();
@@ -49,12 +49,14 @@ class AddTask extends StatelessWidget{
                             color: Theme.of(context).primaryColor,
                             child: Text('Add Task'),
                             onPressed:(){
-                                if(formKey.currentState.validate()){
+                                    var tasksObj = new Task(taskTitle.value.toString(),task.value.toString());
+                                    var tasks1 = Tasks();
+                                    tasks1.addTask(tasksObj);
                                     print('Title : ${taskTitle.value}');
                                     print('Task : ${task.value}');
                                     Scaffold.of(context)
                                         .showSnackBar(SnackBar(content: Text('Processing Data')));
-                                }
+                            
                             }
                         )
                     ]

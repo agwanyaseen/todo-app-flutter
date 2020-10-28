@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-class TodoApp extends StatelessWidget {
+import 'tasks.dart';
+
+class TodoApp extends StatefulWidget{
+
+    @override
+    _TodoApp createState()=> _TodoApp();
+}
+class _TodoApp extends State<TodoApp> {
 
     final tasks = <Task>[
         new Task('AppBar','Carved App Barper fectlyj ygfh gtfhg fhgfhg fhg fh gfhgf hgfhg fhgf yltgukt trfdgtjmhnfg fhnjh gfvhb hkujhytdhmg vfj,hgjkhg hnbvhgfbv nbhvghmgfdgfsdvc nbbkjjho iyhyutkfdh gvmnnbk.jgh liyug jhbjh gjhhgi jkjbjgfdytku rfkbguhkhh viuyghlk.jnh loijhkj bkjb.khbli hyg.kjb n.kljhgbj,hv .kbghoi ;hnkhvyg jukhhy'),
@@ -21,7 +28,14 @@ class TodoApp extends StatelessWidget {
             ),
             body: RefreshIndicator(
                 onRefresh:() async {
-                    Future.delayed(Duration(seconds: 0.5));
+                    //Change below when implemented with database active 
+                    var tasks1 = Tasks();
+                    var results = tasks1.getTasks();
+                    for(var r in results){
+                        tasks.add(r);
+                    }
+                    setState((){});
+                    // await Future.delayed(Duration(seconds: 2));
                 },
                 child: ListView.builder(
                 itemCount: tasks.length,
@@ -58,6 +72,7 @@ class TodoApp extends StatelessWidget {
 
 
 class Task{
+    int id;
     String title;
     String taskDetail;
 
