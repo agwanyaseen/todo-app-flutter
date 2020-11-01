@@ -52,6 +52,7 @@ class AddTask extends StatelessWidget{
                                     // var tasksObj = new Task(taskTitle.value.toString(),task.value.toString());
                                     // var tasks1 = Tasks();
                                     // tasks1.addTask(tasksObj);
+                                    formKey.currentState.validate();
                                     print('Title : ${taskTitle.value}');
                                     print('Task : ${task.value}');
                                     Scaffold.of(context)
