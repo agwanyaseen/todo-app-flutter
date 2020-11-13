@@ -7,7 +7,6 @@ class AddTask extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   final taskTitle = TextEditingController();
   final task = TextEditingController();
-  //Remove Scaffold once Integrated with Routes
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,24 +48,24 @@ class AddTask extends StatelessWidget {
               child: Text('Add Task'),
               onPressed: () {
                 if (formKey.currentState.validate()) {
-                  // here storing in firebase
-                  var user = FirebaseFirestore.instance.collection('tasks');
-                  user
-                      .add({
-                        "title": "Demo",
-                        "task": "A new demo task is added almost"
-                      })
-                      .then((result) => print('Store Success'))
-                      .catchError((error) => print(error));
-                  // *************
+                  addTask(task.value.text, taskTitle.value.text);
+                  Navigator.pop(context);
                 }
-                print('Title : ${taskTitle.value}');
-                print('Task : ${task.value}');
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Processing Data')));
               })
         ]),
       ),
     );
+  }
+
+  addTask(String task, String taskTitle) {
+    CollectionReference users = FirebaseFirestore.instance.collection('tasks');
+
+    users
+        .add({
+          'title': taskTitle,
+          'task': task,
+        })
+        .then((value) => print('Success Full'))
+        .catchError((onError) => print('On Error: $onError'));
   }
 }

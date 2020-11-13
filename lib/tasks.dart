@@ -1,27 +1,26 @@
 import 'todo_app.dart';
 
 class Tasks {
-    var _totaltask = <Task>[];
-    static Tasks task1;
+  var _totaltask = <Task>[];
+  static Tasks task1;
 
-    void addTask(Task task){
-        int newId;
-        if(_totaltask.length==0){
-            newId = 1;
-        }
-        else{
-            var id = _totaltask.last.id;
-            newId = id +1;
-        }
-        task.id = newId;
-        _totaltask.add(task);
+  void addTask(Task task) {
+    int newId;
+    if (_totaltask.length == 0) {
+      newId = 1;
+    } else {
+      var id = _totaltask.last.id;
+      newId = id + 1;
     }
-    List<Task> getTasks(){
-        return _totaltask;
-    }
-    
+    task.id = newId;
+    _totaltask.add(task);
+  }
 
-    // bool removetask(int id){
-    //     _totaltask.where
-    //     return true;
+  List<Task> getTasks() {
+    return _totaltask;
+  }
+
+  // bool removetask(int id){
+  //     _totaltask.where
+  //     return true;
 }
