@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/AddTask': (context) => AddTask(),
+        '/AddTask': (context) => AddTask.add(),
       },
       home: TodoApp(),
     );

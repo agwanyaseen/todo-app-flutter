@@ -1,12 +1,47 @@
-// import ‘package:cloud_firestore/cloud_firestore.dart’;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'tasks.dart';
+import './service/firebase_service.dart' as service;
+import 'todo_app.dart';
 
-class AddTask extends StatelessWidget {
+class AddTask extends StatefulWidget {
+  final bool isEdit;
+  final String documentId;
+
+  AddTask(this.isEdit, this.documentId);
+  AddTask.add() : this(false, null);
+
+  @override
+  _AddTaskState createState() => _AddTaskState(isEdit, documentId);
+}
+
+class _AddTaskState extends State<AddTask> {
   final formKey = GlobalKey<FormState>();
-  final taskTitle = TextEditingController();
-  final task = TextEditingController();
+
+  var taskTitle = TextEditingController();
+
+  var task = TextEditingController();
+
+  bool isEdit;
+
+  Task taskDb;
+
+  String documentId;
+
+  _AddTaskState(this.isEdit, this.documentId);
+  @override
+  void initState() {
+    if (isEdit) {
+      service.getTaskPodo(documentId).then((value) => _setValues(value));
+    }
+    super.initState();
+  }
+
+  void _setValues(Task taskresp) {
+    setState(() {
+      taskTitle.text = taskresp.title;
+      task.text = taskresp.taskDetail;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,24 +83,18 @@ class AddTask extends StatelessWidget {
               child: Text('Add Task'),
               onPressed: () {
                 if (formKey.currentState.validate()) {
-                  addTask(task.value.text, taskTitle.value.text);
+                  String taskValue = task.value.text;
+                  String taskTitleValue = taskTitle.value.text;
+                  if (isEdit) {
+                    service.updateTask(taskTitleValue, taskValue, documentId);
+                  } else {
+                    service.addTask(taskValue, taskTitleValue);
+                  }
                   Navigator.pop(context);
                 }
               })
         ]),
       ),
     );
-  }
-
-  addTask(String task, String taskTitle) {
-    CollectionReference users = FirebaseFirestore.instance.collection('tasks');
-
-    users
-        .add({
-          'title': taskTitle,
-          'task': task,
-        })
-        .then((value) => print('Success Full'))
-        .catchError((onError) => print('On Error: $onError'));
   }
 }

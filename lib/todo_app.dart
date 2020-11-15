@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'tasks.dart';
+import './service/firebase_service.dart' as service;
 
 class TodoApp extends StatefulWidget {
   @override
@@ -8,93 +7,86 @@ class TodoApp extends StatefulWidget {
 }
 
 class _TodoApp extends State<TodoApp> {
-  final tasks = <Task>[
-    new Task('AppBar',
-        'Carved App Barper fectlyj ygfh gtfhg fhgfhg fhg fh gfhgf hgfhg fhgf yltgukt trfdgtjmhnfg fhnjh gfvhb hkujhytdhmg vfj,hgjkhg hnbvhgfbv nbhvghmgfdgfsdvc nbbkjjho iyhyutkfdh gvmnnbk.jgh liyug jhbjh gjhhgi jkjbjgfdytku rfkbguhkhh viuyghlk.jnh loijhkj bkjb.khbli hyg.kjb n.kljhgbj,hv .kbghoi ;hnkhvyg jukhhy'),
-    new Task('Ui', 'Make Easy and Intuitive UI'),
-    new Task('Expansion Tile', 'Use Expansion tile for making thing awesome'),
-    new Task('Sqlite', 'Apply Sqlite for storing data locally'),
-  ];
+  Future<List<Task>> tasks;
+
+  @override
+  void initState() {
+    super.initState();
+    tasks = service.getTasksPoDo();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //var a = _getTasks();
-
+    print(tasks);
     return Scaffold(
       appBar: AppBar(
         title: Text('Manage Your Task'),
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.pushNamed(context, '/AddTask');
-              })
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/AddTask');
+            },
+          )
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          //Change below when implemented with database active
-
-          setState(() {});
-          // await Future.delayed(Duration(seconds: 2));
+      body: FutureBuilder(
+        future: tasks,
+        builder: (context, AsyncSnapshot<List<Task>> snapshot) {
+          if (snapshot.hasData) {
+            var taskValues = snapshot.data;
+            return results(taskValues);
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('tasks').snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            if (snapshots.hasData) {
-              // return ListView(snapshots.data);
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
       ),
     );
   }
 
-  ListView _taskList(String title, String taskDetail) {
+  Widget results(List<Task> values) {
     return ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          return ExpansionTile(
-            title: Text(tasks[index].title),
+      itemCount: values.length,
+      itemBuilder: (context, index) {
+        return _taskList(values[index].title, values[index].taskDetail,
+            values[index].taskId);
+      },
+    );
+  }
+
+  Widget _taskList(String title, String taskDetail, String taskId) {
+    return ExpansionTile(
+      title: Text(title),
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(tasks[index].taskDetail),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(icon: Icon(Icons.edit), onPressed: () {}),
-                        IconButton(icon: Icon(Icons.delete), onPressed: () {}),
-                      ],
-                    ),
-                  ],
-                ),
+              Expanded(
+                child: Text(taskDetail),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      service.deleteTask(taskId);
+                      setState(() {
+                        tasks = service.getTasksPoDo();
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
-          );
-        });
-
-    String _getTasks() {
-      var tasks = <Task>[];
-      CollectionReference collection =
-          FirebaseFirestore.instance.collection('tasks');
-      collection.snapshots().listen((data) {
-        for (var docSnapShot in data.docs) {
-          var data = docSnapShot.data();
-          var task =
-              new Task.firebase(docSnapShot.id, data["title"], data["task"]);
-          tasks.add(task);
-        }
-      });
-      return "nanc";
-    }
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -107,5 +99,3 @@ class Task {
 
   Task.firebase(this.taskId, this.title, this.taskDetail);
 }
-
-//Text(tasks[index].taskDetail)
