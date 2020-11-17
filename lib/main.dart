@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/AddTask': (context) => AddTask.add(),
       },
+      theme: ThemeData(
+        primaryColor: Colors.green,
+      ),
       home: TodoApp(),
     );
   }
