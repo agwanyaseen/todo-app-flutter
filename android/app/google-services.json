@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "641828886211",
+    "firebase_url": "https://angular-authentication-a-8ed4e.firebaseio.com",
+    "project_id": "angular-authentication-a-8ed4e",
+    "storage_bucket": "angular-authentication-a-8ed4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641828886211:android:919e1419509d9816197476",
+        "android_client_info": {
+          "package_name": "com.todo.app.agwan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641828886211-es898lck2vhbg5qof0jdn28ml9bs81ld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-4oyeK0G3OETk4LJp7cwtGBYf069AkKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641828886211-es898lck2vhbg5qof0jdn28ml9bs81ld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
